@@ -1,2 +1,2 @@
 # school_admission
-This is the final yeat project of BCA about Student admission system, it is a web application. 
+This is the final yeat project of BCA about Student admission system, it is a web application developed using python flask frame. this will helpful for the school administrator who handle all the operations involve in the admission process. this will reduce the paper work and digitalize the all operations and store the valid data without fail..it will definately reduce the time and process. Thank you everyone..
