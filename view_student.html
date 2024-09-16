@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Admission</title>
+    <!--favicon -->
+    <link rel="icon" type="image/png" href="https://schools.org.in/assets/images/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <style>
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: left;
+            padding: 0.75rem;
+        }
+
+        .table th {
+            width: 50%;
+        }
+
+        .table td {
+            width: 50%;
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, #007bff, #00c853);
+            /* Blue to Green gradient */
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #00c853);
+            /* Blue to Green gradient */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            /* Magenta to Blue */
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-outline-success:hover,
+        .btn-outline-success:focus,
+        .btn-outline-success:active {
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1), rgba(40, 167, 69, 1));
+            /* Blue to Green */
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-outline-dark:hover,
+        .btn-outline-dark:focus,
+        .btn-outline-dark:active {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            /* Magenta to Blue */
+            color: white;
+            border-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(to right, #FAFDFF, #F0FAFF);
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main content -->
+    <div class="container-fluid p-3">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://schools.org.in/assets/images/favicon.png" width="40px" height="40pxx"
+                        alt="School Logo" width="30" height="30">
+                </a>
+                <div class="d-flex ms-auto">
+                    <a href="{{ url_for('student_dashboard') }}"><button class="btn btn-outline-dark"
+                            style="background-color: azure;" type="button">Back</button></a>
+                </div>
+            </div>
+        </nav>
+        <hr>
+
+        <center>
+            <h1 class="mb-4">Student Details</h1>
+        </center>
+
+        <!-- Basic and Family Information -->
+        <div class="row">
+            <!-- Basic Information -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Basic Information
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Admission No</th>
+                                <td>{{ student[0] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Academic Year</th>
+                                <td>{{ student[1] }}</td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td>{{ student[2] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Middle Name</th>
+                                <td>{{ student[3] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>{{ student[4] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{ student[7] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{ student[8] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Place of Birth</th>
+                                <td>{{ student[9] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Information -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Family Information
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Father's Name</th>
+                                <td>{{ student[15] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Mother's Name</th>
+                                <td>{{ student[16] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Father's Occupation</th>
+                                <td>{{ student[21] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Mother's Occupation</th>
+                                <td>{{ student[22] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Parent's Email</th>
+                                <td>{{ student[5] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Parent's Phone No</th>
+                                <td>{{ student[6] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Number of Dependents</th>
+                                <td>{{ student[24] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Parent's Annual Income</th>
+                                <td>{{ student[23] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Information -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Address Information
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Permanent Address -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Permanent Address</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Address</th>
+                                <td>{{ student[39] }}</td>
+                            </tr>
+                            <tr>
+                                <th>City</th>
+                                <td>{{ student[40] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pin Code</th>
+                                <td>{{ student[41] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Taluka</th>
+                                <td>{{ student[42] }}</td>
+                            </tr>
+                            <tr>
+                                <th>District</th>
+                                <td>{{ student[43] }}</td>
+                            </tr>
+                            <tr>
+                                <th>State</th>
+                                <td>{{ student[44] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Present Address -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Present Address</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Address</th>
+                                <td>{{ student[45] }}</td>
+                            </tr>
+                            <tr>
+                                <th>City</th>
+                                <td>{{ student[46] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pin Code</th>
+                                <td>{{ student[47] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Taluka</th>
+                                <td>{{ student[48] }}</td>
+                            </tr>
+                            <tr>
+                                <th>District</th>
+                                <td>{{ student[49] }}</td>
+                            </tr>
+                            <tr>
+                                <th>State</th>
+                                <td>{{ student[50] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Previous School Information and Document Uploaded -->
+        <div class="row">
+            <!-- Document Uploaded -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Documents
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Birth Certificate</th>
+                                <td>{{ student[56] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Aadhaar Card</th>
+                                <td>{{ student[57] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Father/Mother Aadhaar Card</th>
+                                <td>{{ student[58] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Income Certificate</th>
+                                <td>{{ student[59] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Ration Card</th>
+                                <td>{{ student[60] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Passport Size Photo</th>
+                                <td>{{ student[61] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Passbook</th>
+                                <td>{{ student[62] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Transfer Certificate</th>
+                                <td>{{ student[63] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Previous Class Marks Card</th>
+                                <td>{{ student[64] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Previous School Information -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Previous School Information
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Previous School Name</th>
+                                <td>{{ student[51] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Class</th>
+                                <td>{{ student[52] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Transfer Certificate</th>
+                                <td>{{ student[53] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- Passport Size Photo -->
+                <div class="row p-4">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                {% if student[61] %}
+                                <!-- Display the passport size photo -->
+                                <img src="{{ url_for('uploaded_file', filename=student_photo) }}"
+                                    alt="Passport Size Photo" class="img-fluid" style="max-width: 200px;height: 234px;">
+                                {% else %}
+                                <!-- Display a placeholder image or message if no photo is available -->
+                                <img src="{{ url_for('uploaded_file', filename='placeholder.png') }}"
+                                    alt="No Photo Available" class="img-fluid" style="max-width: 200px;">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center> <a href="{{ url_for('student_dashboard') }}" class="btn btn-primary">Back</a></center>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

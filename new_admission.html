@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Admission</title>
+    <!--favicon -->
+    <link rel="icon" type="image/png" href="https://schools.org.in/assets/images/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <style>
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                min-width: 100%;
+                max-width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            color: white;
+            transition: color 0.3s ease, background 0.3s ease;
+            background: none;
+        }
+
+        .nav-link:hover {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .btn-outline-success,
+        .btn-outline-dark {
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline-success:hover,
+        .btn-outline-success:focus,
+        .btn-outline-success:active {
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1), rgba(40, 167, 69, 1));
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-outline-dark:hover,
+        .btn-outline-dark:focus,
+        .btn-outline-dark:active {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            color: white;
+            border-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(to right, #FAFDFF, #F0FAFF);
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section h4 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            margin-top: 0.5rem;
+        }
+
+        .form-control,
+        .form-control-file {
+            border-radius: 0.25rem;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            /* Magenta to Blue */
+            color: white;
+            border-color: transparent;
+        }
+
+        .form-control-file {
+            padding: 3px;
+        }
+
+        .form-control,
+        .form-control-file {
+            margin-bottom: 15px;
+        }
+
+        .short-field {
+            width: calc(50% - 10px);
+        }
+
+        .short-field-margin {
+            margin-right: 10px;
+        }
+
+        .form-check-inline {
+            margin-right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .short-field {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+    <script src="{{ url_for('static', filename='js/validation.js') }}" defer></script>
+
+</head>
+
+<body>
+    <div class="d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar">
+            <div class="sidebar-header text-center py-4">
+                <img src="../static/images/profile.webp" alt="School Logo" class="img-fluid rounded-circle mb-2">
+                <p class="mb-0">{{ role }}</p>
+                <p class="mb-0">{{ email }}</p>
+            </div>
+            <hr class="bg-light">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"
+                        href="{{ url_for('admin_dashboard')}}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'student' %}active{% endif %}"
+                        href="{{ url_for('student_dashboard')}}">Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'fees_structure' %}active{% endif %}"
+                        href="{{ url_for('fees_structure')}}">Fees Structure</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'contact_requests' %}active{% endif %}"
+                        href="{{ url_for('contact_requests')}}">Admission Request</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'reports' %}active{% endif %}"
+                        href="{{ url_for('reports')}}">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'logout' %}active{% endif %}"
+                        href="{{url_for('logout')}}">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="content p-4">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://schools.org.in/assets/images/favicon.png" width="40px" height="40pxx"
+                            alt="School Logo" width="30" height="30">
+                    </a>
+                    <div class="d-flex ms-auto">
+                        <a href="{{url_for('student_dashboard')}}"><button class="btn btn-outline-dark"
+                                style="background-color: azure;" type="button">Back </button></a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container mt-5">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <h1 class="mb-4 text-center">Basava Education Foundation</h1>
+                <center>
+                    <h5>Shri D. K. Kotrashetti English Medium Lower Primary School, Rabkavi-587311</h5>
+                </center>
+            </div>
+
+            <!-- Add your main content here -->
+            <div class="container mt-5">
+                <h3 class="text-center">Application for Admission</h3>
+                <form action="{{ url_for('new_admission', admission_id=student_data[0] if student_data else None) }}"
+                    method="post" id="admissionForm" enctype="multipart/form-data">
+                    {% if edit_mode %}
+                    <input type="hidden" name="admission_id" value="{{ student[0] }}">
+                    {% endif %}
+                    <!-- Academic Year -->
+                    <div class="form-section">
+                        <h4>Basic Information</h4>
+                        <div class="form-group">
+                            <label for="academic_year">Academic Year</label>
+                            <select class="form-control" id="academic_year" name="academic_year" required
+                                pattern="^\d{4}-\d{4}$" title="Format: YYYY-YYYY"
+                                value="{{ student[1] if edit_mode else '' }}">
+                                <option>2023-2024</option>
+                                <option>2024-2025</option>
+                                <option>2025-2026</option>
+                                <option>2026-2027</option>
+                                <option>2027-2028</option>
+                                <option>2028-2029</option>
+                                <option>2029-2030</option>
+                                <option>2030-2031</option>
+                            </select>
+                            <small class="form-text text-danger" id="academic_year_error"></small>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            Note : Please enter in capital letters
+                        </div>
+                        <!-- <small class="form-text note" style="color: red;">.</small> -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" required
+                                        pattern="[A-Za-z]+" title="Only letters allowed"
+                                        value="{{ student[2] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="first_name_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="middle_name">Middle Name</label>
+                                    <input type="text" class="form-control" id="middle_name" name="middle_name" required
+                                        pattern="[A-Za-z]+" title="Only letters allowed"
+                                        value="{{ student[3] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="middle_name_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" required
+                                        pattern="[A-Za-z]+" title="Only letters allowed"
+                                        value="{{ student[4] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="last_name_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parent_email">Parent's Email</label>
+                                    <input type="email" class="form-control" id="parent_email" name="parent_email"
+                                        required value="{{ student[5] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="parent_email_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parent_phone_no">Parent's Phone Number</label>
+                                    <input type="text" class="form-control" id="parent_phone_no" name="parent_phone_no"
+                                        required pattern="\d{10}" title="Phone Number must be exactly 10 digits"
+                                        value="{{ student[6] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="parent_phone_no_error"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gender</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Boy"
+                                    required {% if edit_mode and student[7]=='Boy' %} checked {% endif %}>
+                                <label class="form-check-label" for="gender_boy">Boy</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Girl"
+                                    required {% if edit_mode and student[7]=='Girl' %} checked {% endif %}>
+                                <label class="form-check-label" for="gender_girl">Girl</label>
+                            </div>
+                            <small class="form-text text-danger" id="gender_error"></small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob" name="dob" placeholder="dd-mm-yyyy"
+                                        required value="{{ student[8] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="dob_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="place_of_birth">Place of Birth</label>
+                                    <input type="text" class="form-control" id="place_of_birth" name="place_of_birth"
+                                        required value="{{ student[9] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="place_of_birth_error"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" name="city" required
+                                        value="{{ student[10] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="city_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pin_code">Pin Code</label>
+                                    <input type="number" class="form-control" id="pin_code" name="pin_code" required
+                                        value="{{ student[11] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="pin_code_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="taluka">Taluka</label>
+                                    <input type="text" class="form-control short-field" id="taluka" name="taluka"
+                                        required value="{{ student[12] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="taluka_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <input type="text" class="form-control short-field" id="district" name="district"
+                                        required value="{{ student[13] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="district_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" class="form-control short-field" id="state" name="state" required
+                                        value="{{ student[14] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="state_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Family Information -->
+                    <div class="form-section">
+                        <h4>Family Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="father_name">Father's Name</label>
+                                    <input type="text" class="form-control" id="father_name" name="father_name" required
+                                        value="{{ student[15] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="father_name_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Father's Living Status</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="father_living_status"
+                                            id="father_living_yes" value="Living" required {% if edit_mode and
+                                            student[17]=='Living' %} checked {% endif %}>
+                                        <label class="form-check-label" for="father_living_yes">Living</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="father_living_status"
+                                            id="father_living_no" value="Not Living" required {% if edit_mode and
+                                            student[17]=='Not Living' %} checked {% endif %}>
+                                        <label class="form-check-label" for="father_living_no">Not Living</label>
+                                    </div>
+                                    <small class="form-text text-danger" id="father_living_status_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mother_name">Mother's Name</label>
+                                    <input type="text" class="form-control" id="mother_name" name="mother_name" required
+                                        value="{{ student[16] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="mother_name_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Mother's Living Status</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_living_status"
+                                            id="mother_living_yes" value="Living" required {% if edit_mode and
+                                            student[18]=='Living' %} checked {% endif %}>
+                                        <label class="form-check-label" for="mother_living_yes">Living</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_living_status"
+                                            id="mother_living_no" value="Not Living" required required {% if edit_mode
+                                            and student[18]=='Not Living' %} checked {% endif %}>
+                                        <label class="form-check-label" for="mother_living_no">Not Living</label>
+                                    </div>
+                                    <small class="form-text text-danger" id="mother_living_status_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="father_education_level">Father's Education Level</label>
+                                    <select class="form-control" id="father_education_level"
+                                        name="father_education_level" required>
+                                        <option value="">Select</option>
+                                        <option value="SSLC" {% if edit_mode and student[19]=='SSLC' %} selected {%
+                                            endif %}>SSLC</option>
+                                        <option value="PUC" {% if edit_mode and student[19]=='PUC' %} selected {% endif
+                                            %}>PUC</option>
+                                        <option value="Diploma" {% if edit_mode and student[19]=='Diploma' %} selected
+                                            {% endif %}>Diploma</option>
+                                        <option value="Graduate" {% if edit_mode and student[19]=='Graduate' %} selected
+                                            {% endif %}>Graduate</option>
+                                        <option value="Masters" {% if edit_mode and student[19]=='Masters' %} selected
+                                            {% endif %}>Masters</option>
+                                        <option value="PhD" {% if edit_mode and student[19]=='PhD' %} selected {% endif
+                                            %}>PhD</option>
+                                        <option value="Other" {% if edit_mode and student[19]=='Other' %} selected {%
+                                            endif %}>Other</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="father_education_level_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mother_education_level">Mother's Education Level</label>
+                                    <select class="form-control" id="mother_education_level"
+                                        name="mother_education_level" required>
+                                        <option value="">Select</option>
+                                        <option value="SSLC" {% if edit_mode and student[20]=='SSLC' %} selected {%
+                                            endif %}>SSLC</option>
+                                        <option value="PUC" {% if edit_mode and student[20]=='PUC' %} selected {% endif
+                                            %}>PUC</option>
+                                        <option value="Diploma" {% if edit_mode and student[20]=='Diploma' %} selected
+                                            {% endif %}>Diploma</option>
+                                        <option value="Graduate" {% if edit_mode and student[20]=='Graduate' %} selected
+                                            {% endif %}>Graduate</option>
+                                        <option value="Masters" {% if edit_mode and student[20]=='Masters' %} selected
+                                            {% endif %}>Masters</option>
+                                        <option value="PhD" {% if edit_mode and student[20]=='PhD' %} selected {% endif
+                                            %}>PhD</option>
+                                        <option value="Other" {% if edit_mode and student[20]=='Other' %} selected {%
+                                            endif %}>Other</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="mother_education_level_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="father_occupation">Father's Occupation</label>
+                            <input type="text" class="form-control" id="father_occupation" name="father_occupation"
+                                required value="{{ student[21] if edit_mode else '' }}">
+                            <small class="form-text text-danger" id="father_occupation_error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="mother_occupation">Mother's Occupation</label>
+                            <input type="text" class="form-control" id="mother_occupation" name="mother_occupation"
+                                required value="{{ student[22] if edit_mode else '' }}">
+                            <small class="form-text text-danger" id="mother_occupation_error"></small>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parent_annual_income">Parent's Annual Income</label>
+                                    <input type="number" class="form-control" id="parent_annual_income"
+                                        name="parent_annual_income" required
+                                        value="{{ student[23] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="parent_annual_income_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="number_of_dependents">Number of Dependents</label>
+                                    <input type="number" class="form-control" id="number_of_dependents"
+                                        name="number_of_dependents" required
+                                        value="{{ student[24] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="number_of_dependents_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pupil_staying_with">Pupil Staying With</label>
+                                    <select class="form-control" id="pupil_staying_with" name="pupil_staying_with"
+                                        required>
+                                        <option value="">Select an option</option>
+                                        <option value="Parents" {% if edit_mode and student[25]=='Parents' %} selected
+                                            {% endif %}>Parents</option>
+                                        <option value="Guardian" {% if edit_mode and student[25]=='Guardian' %} selected
+                                            {% endif %}>Guardian</option>
+                                        <option value="Staying at Hostel" {% if edit_mode and
+                                            student[25]=='Staying at Hostel' %} selected {% endif %}>Staying at Hostel
+                                        </option>
+                                        <option value="Rental Room" {% if edit_mode and student[25]=='Rental Room' %}
+                                            selected {% endif %}>Rental Room</option>
+                                        <option value="Free Boarding" {% if edit_mode and student[25]=='Free Boarding'
+                                            %} selected {% endif %}>Free Boarding</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="pupil_staying_with_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="guardian_name">Guardian Name</label>
+                                    <input type="text" class="form-control" id="guardian_name" name="guardian_name"
+                                        value="{{ student[26] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="guardian_name_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardian_address">Guardian Address</label>
+                            <textarea class="form-control" id="guardian_address" name="guardian_address"
+                                required>{{ student[27] if edit_mode else '' }}</textarea>
+                            <small class="form-text text-danger" id="guardian_address_error"></small>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nationality">Student Nationality</label>
+                                    <select class="form-control" id="nationality" name="nationality" required>
+                                        <option value="">Select Nationality</option>
+                                        <option value="Indian" {% if edit_mode and student[28]=='Indian' %} selected {%
+                                            endif %}>Indian</option>
+                                        <option value="Other" {% if edit_mode and student[28]=='Other' %} selected {%
+                                            endif %}>Other</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="nationality_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="religion">Religion</label>
+                                    <select class="form-control" id="religion" name="religion" required>
+                                        <option value="">Select Religion</option>
+                                        <option value="Hindu" {% if edit_mode and student[29]=='Hindu' %}selected{%
+                                            endif %}>Hindu</option>
+                                        <option value="Muslim" {% if edit_mode and student[29]=='Muslim' %}selected{%
+                                            endif %}>Muslim</option>
+                                        <option value="Christian" {% if edit_mode and student[29]=='Christian'
+                                            %}selected{% endif %}>Christian</option>
+                                        <option value="Sikh" {% if edit_mode and student[29]=='Sikh' %}selected{% endif
+                                            %}>Sikh</option>
+                                        <option value="Other" {% if edit_mode and student[29]=='Other' %}selected{%
+                                            endif %}>Other</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="religion_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="caste">Caste</label>
+                                    <select class="form-control" id="caste" name="caste">
+                                        <option value="">Select Caste</option>
+                                        <option value="2A" {% if edit_mode and student[30]=='2A' %}selected{% endif %}>
+                                            2A</option>
+                                        <option value="2B" {% if edit_mode and student[30]=='2B' %}selected{% endif %}>
+                                            2B</option>
+                                        <option value="3A" {% if edit_mode and student[30]=='3A' %}selected{% endif %}>
+                                            3A</option>
+                                        <option value="3B" {% if edit_mode and student[30]=='3B' %}selected{% endif %}>
+                                            3B</option>
+                                        <option value="SC" {% if edit_mode and student[30]=='SC' %}selected{% endif %}>
+                                            SC</option>
+                                        <option value="ST" {% if edit_mode and student[30]=='ST' %}selected{% endif %}>
+                                            ST</option>
+                                        <option value="Other" {% if edit_mode and student[30]=='Other' %}selected{%
+                                            endif %}>Other</option>
+                                    </select>
+                                    <small class="form-text text-danger" id="caste_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mother_tongue">Mother Tongue</label>
+                                    <input type="text" class="form-control" id="mother_tongue" name="mother_tongue"
+                                        required value="{{ student[31] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="mother_tongue_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="any_other_languages_spoken">Any Other Languages Spoken</label>
+                                    <input type="text" class="form-control" id="any_other_languages_spoken"
+                                        name="any_other_languages_spoken"
+                                        value="{{ student[32] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="languages_spoken_error"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="number_of_brothers">Number of Brothers</label>
+                                    <input type="number" class="form-control" id="number_of_brothers"
+                                        name="number_of_brothers" value="{{ student[33] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="number_of_brothers_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="elder_brothers">Elder Brothers</label>
+                                    <input type="number" class="form-control" id="elder_brothers" name="elder_brothers"
+                                        value="{{ student[34] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="elder_brothers_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="younger_brothers">Younger Brothers</label>
+                                    <input type="number" class="form-control" id="younger_brothers"
+                                        name="younger_brothers" value="{{ student[35] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="younger_brothers_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="number_of_sisters">Number of Sisters</label>
+                                    <input type="number" class="form-control" id="number_of_sisters"
+                                        name="number_of_sisters" value="{{ student[36] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="number_of_sisters_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="elder_sisters">Elder Sisters</label>
+                                    <input type="number" class="form-control" id="elder_sisters" name="elder_sisters"
+                                        value="{{ student[37] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="elder_sisters_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="younger_sisters">Younger Sisters</label>
+                                    <input type="number" class="form-control" id="younger_sisters"
+                                        name="younger_sisters" value="{{ student[38] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="younger_sisters_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <div class="form-section">
+                        <h4>Address Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_address">Permanent Address</label>
+                                    <textarea class="form-control" id="permanent_address" name="permanent_address"
+                                        required>{{ student[39] if edit_mode else '' }}</textarea>
+                                    <small class="form-text text-danger" id="permanent_address_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_city">City</label>
+                                    <input type="text" class="form-control" id="permanent_city" name="permanent_city"
+                                        required value="{{ student[40] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="permanent_city_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_pin_code">Pin Code</label>
+                                    <input type="text" class="form-control" id="permanent_pin_code"
+                                        name="permanent_pin_code" required
+                                        value="{{ student[41] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="permanent_pin_code_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_taluka">Taluka</label>
+                                    <input type="text" class="form-control short-field" id="permanent_taluka"
+                                        name="permanent_taluka" required value="{{ student[42] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="permanent_taluka_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_district">District</label>
+                                    <input type="text" class="form-control short-field" id="permanent_district"
+                                        name="permanent_district" required
+                                        value="{{ student[43] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="permanent_district_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permanent_state">State</label>
+                                    <input type="text" class="form-control short-field" id="permanent_state"
+                                        name="permanent_state" required value="{{ student[44] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="permanent_state_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_address">Present Address</label>
+                                    <textarea class="form-control" id="present_address" name="present_address"
+                                        required>{{ student[45] if edit_mode else '' }}</textarea>
+                                    <small class="form-text text-danger" id="present_address_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_city">City</label>
+                                    <input type="text" class="form-control" id="present_city" name="present_city"
+                                        required value="{{ student[46] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="present_city_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_pin_code">Pin Code</label>
+                                    <input type="text" class="form-control" id="present_pin_code"
+                                        name="present_pin_code" required value="{{ student[47] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="present_pin_code_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_taluka">Taluka</label>
+                                    <input type="text" class="form-control short-field" id="present_taluka"
+                                        name="present_taluka" required value="{{ student[48] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="present_taluka_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_district">District</label>
+                                    <input type="text" class="form-control short-field" id="present_district"
+                                        name="present_district" required value="{{ student[49] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="present_district_error"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="present_state">State</label>
+                                    <input type="text" class="form-control short-field" id="present_state"
+                                        name="present_state" required value="{{ student[50] if edit_mode else '' }}">
+                                    <small class="form-text text-danger" id="present_state_error"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Previous School Information -->
+                    <div class="form-section">
+                        <h4>Previous School Information</h4>
+                        <div class="form-group">
+                            <label for="studied_in_previous_school">Studied in Previous School</label>
+                            <input type="text" class="form-control" id="studied_in_previous_school"
+                                name="studied_in_previous_school" value="{{ student[51] if edit_mode else '' }}">
+                            <small class="form-text text-danger" id="studied_in_previous_school_error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="previous_studied_class">Previous Studied Class</label>
+                            <select class="form-control" id="previous_studied_class" name="previous_studied_class"
+                                required>
+                                <option value="">Select Class</option>
+                                <option value="1" {{ 'selected' if edit_mode and student[52]=='1' else '' }}>1</option>
+                                <option value="2" {{ 'selected' if edit_mode and student[52]=='2' else '' }}>2</option>
+                                <option value="3" {{ 'selected' if edit_mode and student[52]=='3' else '' }}>3</option>
+                                <option value="4" {{ 'selected' if edit_mode and student[52]=='4' else '' }}>4</option>
+                                <option value="5" {{ 'selected' if edit_mode and student[52]=='5' else '' }}>5</option>
+                                <option value="6" {{ 'selected' if edit_mode and student[52]=='6' else '' }}>6</option>
+                                <option value="7" {{ 'selected' if edit_mode and student[52]=='7' else '' }}>7</option>
+                                <option value="8" {{ 'selected' if edit_mode and student[52]=='8' else '' }}>8</option>
+                                <option value="9" {{ 'selected' if edit_mode and student[52]=='9' else '' }}>9</option>
+                            </select>
+                            <small class="form-text text-danger" id="previous_studied_class_error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_of_transfer_certificate">Date of Transfer Certificate</label>
+                            <input type="date" class="form-control" id="date_of_transfer_certificate"
+                                name="date_of_transfer_certificate" placeholder="dd-mm-yyyy"
+                                value="{{ student[53] if edit_mode else '' }}">
+                            <small class="form-text text-danger" id="date_of_transfer_certificate_error"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enrolling_class">Enrolling Class</label>
+                            <select class="form-control" id="enrolling_class" name="enrolling_class" required>
+                                <option value="">Select Class</option>
+                                <option value="1" {{ 'selected' if edit_mode and student[54]=='1' else '' }}>1</option>
+                                <option value="2" {{ 'selected' if edit_mode and student[54]=='2' else '' }}>2</option>
+                                <option value="3" {{ 'selected' if edit_mode and student[54]=='3' else '' }}>3</option>
+                                <option value="4" {{ 'selected' if edit_mode and student[54]=='4' else '' }}>4</option>
+                                <option value="5" {{ 'selected' if edit_mode and student[54]=='5' else '' }}>5</option>
+                                <option value="6" {{ 'selected' if edit_mode and student[54]=='6' else '' }}>6</option>
+                                <option value="7" {{ 'selected' if edit_mode and student[54]=='7' else '' }}>7</option>
+                                <option value="8" {{ 'selected' if edit_mode and student[54]=='8' else '' }}>8</option>
+                                <option value="9" {{ 'selected' if edit_mode and student[54]=='9' else '' }}>9</option>
+                                <option value="10" {{ 'selected' if edit_mode and student[54]=='10' else '' }}>10
+                                </option>
+                            </select>
+                            <small class="form-text text-danger" id="enrolling_class_error"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_of_enrollment">Date of Enrollment</label>
+                            <input type="date" class="form-control" id="date_of_enrollment" name="date_of_enrollment"
+                                placeholder="dd-mm-yyyy" value="{{ student[55] if edit_mode else '' }}">
+                            <small class="form-text text-danger" id="date_of_enrollment_error"></small>
+                        </div>
+                    </div>
+
+                    <!-- Document Upload -->
+                    <div class="form-section">
+                        <h4>Document Upload</h4>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="birth_certificate">Birth Certificate</label>
+                                    <input type="file" class="form-control-file" id="birth_certificate"
+                                        name="birth_certificate" accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="aadhaar_card">Aadhaar Card</label>
+                                    <input type="file" class="form-control-file" id="aadhaar_card" name="aadhaar_card"
+                                        accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="father_mother_aadhaar_card">Father/Mother Aadhaar Card</label>
+                                    <input type="file" class="form-control-file" id="father_mother_aadhaar_card"
+                                        name="father_mother_aadhaar_card" accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="income_certificate">Income Certificate</label>
+                                    <input type="file" class="form-control-file" id="income_certificate"
+                                        name="income_certificate" accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ration_card">Ration Card</label>
+                                    <input type="file" class="form-control-file" id="ration_card" name="ration_card"
+                                        accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="passport_size_photo">Passport Size Photo</label>
+                                    <input type="file" class="form-control-file" id="passport_size_photo"
+                                        name="passport_size_photo" accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="passbook">Passbook</label>
+                                    <input type="file" class="form-control-file" id="passbook" name="passbook"
+                                        accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="transfer_certificate">Transfer Certificate</label>
+                                    <input type="file" class="form-control-file" id="transfer_certificate"
+                                        name="transfer_certificate" accept=".pdf,.jpeg,.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="previous_marks_card">Previous Class Marks Card</label>
+                                <input type="file" class="form-control-file" id="previous_class_marks_card"
+                                    name="previous_class_marks_card" accept=".pdf,.jpeg,.jpg">
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Save</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+<script>
+
+    // father name 
+    function validateFatherName() {
+        const field = document.getElementById('father_name');
+        const errorElement = document.getElementById('father_name_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Check if field is empty
+        if (!value) {
+            errorMessage = 'Please enter the Father\'s Name.';
+        } else if (value.length < 2) {
+            // Ensure the name is at least 2 characters long
+            errorMessage = 'Father\'s Name must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('father_name').addEventListener('input', validateFatherName);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isFatherNameValid = validateFatherName();
+        disableSubmit(!(isFatherNameValid));
+    });
+    validateFatherName();
+
+    // Father living status
+    function validateFatherLivingStatus() {
+        const livingStatusRadios = document.getElementsByName('father_living_status');
+        const errorElement = document.getElementById('father_living_status_error');
+        let errorMessage = '';
+
+        let selectedStatus = false;
+        for (const radio of livingStatusRadios) {
+            if (radio.checked) {
+                selectedStatus = true;
+                break;
+            }
+        }
+
+        if (!selectedStatus) {
+            errorMessage = 'Please select Father\'s Living Status.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    document.querySelectorAll('input[name="father_living_status"]').forEach(radio => {
+        radio.addEventListener('change', validateFatherLivingStatus);
+    });
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isFatherLivingStatusValid = validateFatherLivingStatus();
+        disableSubmit(!(isFatherLivingStatusValid));
+    });
+    validateFatherLivingStatus();
+
+
+    // mother name
+
+    function validateMotherName() {
+        const field = document.getElementById('mother_name');
+        const errorElement = document.getElementById('mother_name_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Mother\'s Name.';
+        } else if (value.length < 2) {
+            errorMessage = 'Mother\'s Name must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('mother_name').addEventListener('input', validateMotherName);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isMotherNameValid = validateMotherName();
+        disableSubmit(!(isMotherNameValid));
+    });
+    validateMotherName();
+
+
+    // mother living status
+
+    function validateMotherLivingStatus() {
+        const statusRadios = document.getElementsByName('mother_living_status');
+        const errorElement = document.getElementById('mother_living_status_error');
+        let errorMessage = '';
+
+        let selectedStatus = false;
+        for (const radio of statusRadios) {
+            if (radio.checked) {
+                selectedStatus = true;
+                break;
+            }
+        }
+
+        if (!selectedStatus) {
+            errorMessage = 'Please select Mother\'s Living Status.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Add event listener to validate Mother's Living Status on change
+    document.querySelectorAll('input[name="mother_living_status"]').forEach(radio => {
+        radio.addEventListener('change', validateMotherLivingStatus);
+    });
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isMotherLivingStatusValid = validateMotherLivingStatus();
+        disableSubmit(!(isMotherLivingStatusValid));
+    });
+    validateFatherLivingStatus();
+
+    // Father educational level
+    function validateFatherEducationLevel() {
+        const field = document.getElementById('father_education_level');
+        const errorElement = document.getElementById('father_education_level_error');
+        const value = field.value;
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select Father\'s Education Level.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('father_education_level').addEventListener('change', validateFatherEducationLevel);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isFatherEducationLevelValid = validateFatherEducationLevel();
+        disableSubmit(!(isFatherEducationLevelValid));
+    });
+    validateFatherEducationLevel()
+
+    //  mother educational level
+    function validateMotherEducationLevel() {
+        const field = document.getElementById('mother_education_level');
+        const errorElement = document.getElementById('mother_education_level_error');
+        const value = field.value;
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select Mother\'s Education Level.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('mother_education_level').addEventListener('change', validateMotherEducationLevel);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isMotherEducationLevelValid = validateMotherEducationLevel();
+        disableSubmit(!(isMotherEducationLevelValid));
+    });
+    validateMotherEducationLevel()
+
+
+    // Father occuption
+    function validateFatherOccupation() {
+        const field = document.getElementById('father_occupation');
+        const errorElement = document.getElementById('father_occupation_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Father\'s Occupation.';
+        } else if (value.length < 2) {
+            errorMessage = 'Father\'s Occupation must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('father_occupation').addEventListener('input', validateFatherOccupation);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isFatherOccupationValid = validateFatherOccupation();
+        disableSubmit(!(isFatherOccupationValid));
+    });
+    validateFatherOccupation();
+
+    // mother occuption
+    function validateMotherOccupation() {
+        const field = document.getElementById('mother_occupation');
+        const errorElement = document.getElementById('mother_occupation_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Mother\'s Occupation.';
+        } else if (value.length < 2) {
+            errorMessage = 'Mother\'s Occupation must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('mother_occupation').addEventListener('input', validateMotherOccupation);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isMotherOccupationValid = validateMotherOccupation();
+        disableSubmit(!(isMotherOccupationValid));
+    });
+    validateMotherOccupation();
+
+    // parent annual income
+    function validateParentAnnualIncome() {
+        const field = document.getElementById('parent_annual_income');
+        const errorElement = document.getElementById('parent_annual_income_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+        const numberValue = parseFloat(value);
+
+        if (!value) {
+            errorMessage = 'Please enter Parent\'s Annual Income.';
+        } else if (isNaN(numberValue) || numberValue <= 0) {
+            errorMessage = 'Parent\'s Annual Income must be a positive number.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('parent_annual_income').addEventListener('input', validateParentAnnualIncome);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isParentAnnualIncomeValid = validateParentAnnualIncome();
+        disableSubmit(!(isParentAnnualIncomeValid));
+    });
+    validateParentAnnualIncome();
+
+    // number oF dependents
+    function validateNumberOfDependents() {
+        const field = document.getElementById('number_of_dependents');
+        const errorElement = document.getElementById('number_of_dependents_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+        const numberValue = parseInt(value, 10);
+
+        if (!value) {
+            errorMessage = 'Please enter the number of dependents.';
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of dependents must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('number_of_dependents').addEventListener('input', validateNumberOfDependents);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isNumberOfDependentsValid = validateNumberOfDependents();
+        disableSubmit(!(isNumberOfDependentsValid));
+    });
+    validateNumberOfDependents();
+
+    // pupil staying with
+    function validatePupilStayingWith() {
+        const field = document.getElementById('pupil_staying_with');
+        const errorElement = document.getElementById('pupil_staying_with_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select an option for Pupil Staying With.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('pupil_staying_with').addEventListener('change', validatePupilStayingWith);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isPupilStayingWithValid = validatePupilStayingWith();
+        disableSubmit(!(isGuardianNameValid));
+    });
+    validateGuardianName();
+
+    // guardian name
+    function validateGuardianName() {
+        const field = document.getElementById('guardian_name');
+        const errorElement = document.getElementById('guardian_name_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Guardian Name.';
+        } else if (value.length < 2) {
+            errorMessage = 'Guardian Name must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('guardian_name').addEventListener('input', validateGuardianName);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isGuardianNameValid = validateGuardianName();
+        disableSubmit(!(isGuardianNameValid));
+    });
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    validateGuardianName();
+
+
+    // guardian address
+
+    function validateGuardianAddress() {
+        const field = document.getElementById('guardian_address');
+        const errorElement = document.getElementById('guardian_address_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Guardian Address.';
+        } else if (value.length < 10) {
+            errorMessage = 'Guardian Address must be at least 10 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+    document.getElementById('guardian_address').addEventListener('input', validateGuardianAddress);
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isGuardianAddressValid = validateGuardianAddress();
+        disableSubmit(!(isGuardianAddressValid));
+    });
+    validateGuardianAddress();
+
+
+    // nationality
+
+    function validateNationality() {
+        const field = document.getElementById('nationality');
+        const errorElement = document.getElementById('nationality_error');
+        const value = field.value;
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select the Student\'s Nationality.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+
+    document.getElementById('nationality').addEventListener('change', validateNationality);
+
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isNationalityValid = validateNationality();
+        disableSubmit(!isNationalityValid);
+    });
+    validateNationality();
+
+    // validate religion
+
+    function validateReligion() {
+        const field = document.getElementById('religion');
+        const errorElement = document.getElementById('religion_error');
+        const value = field.value;
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select a religion.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+
+    document.getElementById('religion').addEventListener('change', validateReligion);
+
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isReligionValid = validateReligion();
+        disableSubmit(!isReligionValid);
+    });
+    validateReligion();
+
+    // caste
+    function validateCaste() {
+        const field = document.getElementById('caste');
+        const errorElement = document.getElementById('caste_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please select your caste.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+
+    document.getElementById('caste').addEventListener('input', validateCaste);
+
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isCasteValid = validateCaste();
+        disableSubmit(!isCasteValid);
+    });
+    validateCaste();
+
+    // mother tongue
+
+    function validateMotherTongue() {
+        const field = document.getElementById('mother_tongue');
+        const errorElement = document.getElementById('mother_tongue_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Please enter Mother Tongue.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+
+    document.getElementById('mother_tongue').addEventListener('input', validateMotherTongue);
+
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isMotherTongueValid = validateMotherTongue();
+        disableSubmit(!isMotherTongueValid);
+    });
+    validateMotherTongue();
+
+    // any other language
+    function validateLanguagesSpoken() {
+        const field = document.getElementById('any_other_languages_spoken');
+        const errorElement = document.getElementById('languages_spoken_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (value && !/^[a-zA-Z, ]+$/.test(value)) {
+            errorMessage = 'Please enter valid languages separated by commas.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    function disableSubmit(disable) {
+        document.getElementById('submitBtn').disabled = disable;
+    }
+
+    document.getElementById('any_other_languages_spoken').addEventListener('input', validateLanguagesSpoken);
+
+    document.getElementById('admissionForm').addEventListener('input', () => {
+        const isLanguagesSpokenValid = validateLanguagesSpoken();
+        disableSubmit(!isLanguagesSpokenValid);
+    });
+    validateLanguagesSpoken();
+
+    // number of brothers
+    // Validate Number of Brothers
+    function validateNumberOfBrothers() {
+        const field = document.getElementById('number_of_brothers');
+        const errorElement = document.getElementById('number_of_brothers_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of brothers must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('number_of_brothers').addEventListener('input', validateNumberOfBrothers);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateNumberOfBrothers()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateNumberOfBrothers();
+
+    // number of elder brothers
+    // Validate Elder Brothers
+    function validateElderBrothers() {
+        const field = document.getElementById('elder_brothers');
+        const errorElement = document.getElementById('elder_brothers_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of elder brothers must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('elder_brothers').addEventListener('input', validateElderBrothers);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateElderBrothers()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateElderBrothers();
+
+    // younger brothers
+    // Validate Younger Brothers
+    function validateYoungerBrothers() {
+        const field = document.getElementById('younger_brothers');
+        const errorElement = document.getElementById('younger_brothers_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of younger brothers must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('younger_brothers').addEventListener('input', validateYoungerBrothers);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateYoungerBrothers()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateYoungerBrothers();
+
+    // number sisters
+    // Validate Number of Sisters
+    function validateNumberOfSisters() {
+        const field = document.getElementById('number_of_sisters');
+        const errorElement = document.getElementById('number_of_sisters_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of sisters must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('number_of_sisters').addEventListener('input', validateNumberOfSisters);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateNumberOfSisters()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateNumberOfSisters();
+
+    // elider sisters
+    // Validate Elder Sisters
+    function validateElderSisters() {
+        const field = document.getElementById('elder_sisters');
+        const errorElement = document.getElementById('elder_sisters_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of elder sisters must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('elder_sisters').addEventListener('input', validateElderSisters);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateElderSisters()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateElderSisters();
+
+    // younger sister
+    // Validate Younger Sisters
+    function validateYoungerSisters() {
+        const field = document.getElementById('younger_sisters');
+        const errorElement = document.getElementById('younger_sisters_error');
+        const value = field.value.trim();
+        const numberValue = parseInt(value, 10);
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = ''; // No error message for empty value as it's allowed
+        } else if (isNaN(numberValue) || numberValue < 0) {
+            errorMessage = 'Number of younger sisters must be a non-negative integer.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('younger_sisters').addEventListener('input', validateYoungerSisters);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateYoungerSisters()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateYoungerSisters();
+
+    // permenent address
+    // Validate Permanent Address
+    function validatePermanentAddress() {
+        const field = document.getElementById('permanent_address');
+        const errorElement = document.getElementById('permanent_address_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = 'Permanent Address is required.';
+        } else if (value.length < 10) {  // Example: Ensure address is at least 10 characters long
+            errorMessage = 'Permanent Address must be at least 10 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_address').addEventListener('input', validatePermanentAddress);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentAddress()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentAddress();
+
+    // permenent city
+    // Validate Permanent City
+    function validatePermanentCity() {
+        const field = document.getElementById('permanent_city');
+        const errorElement = document.getElementById('permanent_city_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        if (value === '') {
+            errorMessage = 'City is required.';
+        } else if (value.length < 2) {  // Example: Ensure city name is at least 2 characters long
+            errorMessage = 'City must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_city').addEventListener('input', validatePermanentCity);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentCity()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentCity();
+
+    // pincode
+    // Validate Permanent Pin Code
+    function validatePermanentPinCode() {
+        const field = document.getElementById('permanent_pin_code');
+        const errorElement = document.getElementById('permanent_pin_code_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the pin code is exactly 6 digits
+        const pinCodePattern = /^[0-9]{6}$/;
+
+        if (value === '') {
+            errorMessage = 'Pin Code is required.';
+        } else if (!pinCodePattern.test(value)) {
+            errorMessage = 'Pin Code must be exactly 6 digits.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_pin_code').addEventListener('input', validatePermanentPinCode);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentPinCode()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentPinCode();
+
+    // permenent taluka
+    // Validate Permanent Taluka
+    function validatePermanentTaluka() {
+        const field = document.getElementById('permanent_taluka');
+        const errorElement = document.getElementById('permanent_taluka_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the taluka is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'Taluka is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'Taluka must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_taluka').addEventListener('input', validatePermanentTaluka);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentTaluka()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentTaluka();
+
+    // permenent district
+    // Validate Permanent District
+    function validatePermanentDistrict() {
+        const field = document.getElementById('permanent_district');
+        const errorElement = document.getElementById('permanent_district_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the district is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'District is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'District must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_district').addEventListener('input', validatePermanentDistrict);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentDistrict()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentDistrict();
+
+    // permenent state
+    // Validate Permanent State
+    function validatePermanentState() {
+        const field = document.getElementById('permanent_state');
+        const errorElement = document.getElementById('permanent_state_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the state is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'State is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'State must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('permanent_state').addEventListener('input', validatePermanentState);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePermanentState()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentState();
+
+    // present address
+    // Validate Present Address
+    function validatePresentAddress() {
+        const field = document.getElementById('present_address');
+        const errorElement = document.getElementById('present_address_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the address is not empty and has at least 5 characters
+        if (value === '') {
+            errorMessage = 'Present Address is required.';
+        } else if (value.length < 5) {
+            errorMessage = 'Present Address must be at least 5 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_address').addEventListener('input', validatePresentAddress);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentAddress()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePresentAddress();
+
+    // present city
+
+    // Validate Present City
+    function validatePresentCity() {
+        const field = document.getElementById('present_city');
+        const errorElement = document.getElementById('present_city_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the city is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'City is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'City must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_city').addEventListener('input', validatePresentCity);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentCity()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePermanentState();
+
+    // present pincode
+
+    // Validate Present Pin Code
+    function validatePresentPinCode() {
+        const field = document.getElementById('present_pin_code');
+        const errorElement = document.getElementById('present_pin_code_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the pin code is not empty and has exactly 6 digits
+        if (value === '') {
+            errorMessage = 'Pin Code is required.';
+        } else if (!/^\d{6}$/.test(value)) {
+            errorMessage = 'Pin Code must be exactly 6 digits.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_pin_code').addEventListener('input', validatePresentPinCode);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentPinCode()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePresentPinCode();
+
+    // present taluka
+
+    // Validate Present Taluka
+    function validatePresentTaluka() {
+        const field = document.getElementById('present_taluka');
+        const errorElement = document.getElementById('present_taluka_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the taluka is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'Taluka is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'Taluka must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_taluka').addEventListener('input', validatePresentTaluka);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentTaluka()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePresentTaluka();
+
+    // present district
+
+    // Validate Present District
+    function validatePresentDistrict() {
+        const field = document.getElementById('present_district');
+        const errorElement = document.getElementById('present_district_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the district is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'District is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'District must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_district').addEventListener('input', validatePresentDistrict);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentDistrict()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validatePresentDistrict();
+
+    // present state
+    // Validate Present State
+    function validatePresentState() {
+        const field = document.getElementById('present_state');
+        const errorElement = document.getElementById('present_state_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the state is not empty and has at least 2 characters
+        if (value === '') {
+            errorMessage = 'State is required.';
+        } else if (value.length < 2) {
+            errorMessage = 'State must be at least 2 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('present_state').addEventListener('input', validatePresentState);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validatePresentState()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+
+    // previous school
+    // Validate Studied in Previous School
+    function validateStudiedInPreviousSchool() {
+        const field = document.getElementById('studied_in_previous_school');
+        const errorElement = document.getElementById('studied_in_previous_school_error');
+        const value = field.value.trim();
+
+        let errorMessage = '';
+
+        // Example: Validate that the field is not empty and has at least 3 characters
+        if (value === '') {
+            errorMessage = 'Previous school information is required.';
+        } else if (value.length < 3) {
+            errorMessage = 'Previous school information must be at least 3 characters long.';
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('studied_in_previous_school').addEventListener('input', validateStudiedInPreviousSchool);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateStudiedInPreviousSchool()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateStudiedInPreviousSchool();
+
+    // previous class and enrolling class
+    // Validate Previous Studied Class and Enrolling Class
+    function validateClasses() {
+        const previousClassField = document.getElementById('previous_studied_class');
+        const enrollingClassField = document.getElementById('enrolling_class');
+        const previousClassValue = parseInt(previousClassField.value, 10);
+        const enrollingClassValue = parseInt(enrollingClassField.value, 10);
+        const previousClassErrorElement = document.getElementById('previous_studied_class_error');
+        const enrollingClassErrorElement = document.getElementById('enrolling_class_error');
+
+        let isValid = true;
+
+        // Clear previous error messages
+        previousClassErrorElement.textContent = '';
+        enrollingClassErrorElement.textContent = '';
+
+        // Validate that enrolling class is greater than previous studied class by at least 1
+        if (isNaN(previousClassValue) || isNaN(enrollingClassValue)) {
+            enrollingClassErrorElement.textContent = 'Both class selections must be made.';
+            isValid = false;
+        } else if (enrollingClassValue <= previousClassValue) {
+            enrollingClassErrorElement.textContent = 'Enrolling class must be greater than previous studied class by at least 1.';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('previous_studied_class').addEventListener('change', validateClasses);
+        document.getElementById('enrolling_class').addEventListener('change', validateClasses);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateClasses()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateClasses();
+
+
+    // Validate Date of Transfer Certificate
+    function validateDateOfTransferCertificate() {
+        const dateField = document.getElementById('date_of_transfer_certificate');
+        const errorElement = document.getElementById('date_of_transfer_certificate_error');
+        const dateValue = dateField.value;
+
+        let errorMessage = '';
+
+        if (!dateValue) {
+            errorMessage = 'Please select a date.';
+        } else {
+            const today = new Date();
+            const inputDate = new Date(dateValue);
+
+            if (inputDate > today) {
+                errorMessage = 'The date cannot be in the future.';
+            }
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('date_of_transfer_certificate').addEventListener('change', validateDateOfTransferCertificate);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateDateOfTransferCertificate()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateDateOfTransferCertificate();
+
+    //date of enrollement
+    // Validate Date of Enrollment
+    function validateDateOfEnrollment() {
+        const dateField = document.getElementById('date_of_enrollment');
+        const errorElement = document.getElementById('date_of_enrollment_error');
+        const dateValue = dateField.value;
+
+        let errorMessage = '';
+
+        if (!dateValue) {
+            errorMessage = 'Please select a date.';
+        } else {
+            const today = new Date();
+            const inputDate = new Date(dateValue);
+
+            if (inputDate > today) {
+                errorMessage = 'The date cannot be in the future.';
+            }
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event Listener for Real-Time Validation
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('date_of_enrollment').addEventListener('change', validateDateOfEnrollment);
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            if (!validateDateOfEnrollment()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+    validateDateOfEnrollment();
+
+    // documents upload
+    // Function to validate file input
+    function validateFileInput(inputId, allowedExtensions, maxSizeMB, errorId) {
+        const fileInput = document.getElementById(inputId);
+        const errorElement = document.getElementById(errorId);
+        const file = fileInput.files[0];
+        let errorMessage = '';
+
+        if (file) {
+            const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+
+            // Check file extension
+            if (!allowedExtensions.includes(fileExtension)) {
+                errorMessage = `Invalid file type. Allowed types are: ${allowedExtensions.join(', ')}.`;
+            }
+            // Check file size
+            else if (fileSizeMB > maxSizeMB) {
+                errorMessage = `File size should not exceed ${maxSizeMB} MB.`;
+            }
+        }
+
+        errorElement.textContent = errorMessage;
+        return !errorMessage;
+    }
+
+    // Event listeners for file inputs
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('birth_certificate').addEventListener('change', () => validateFileInput('birth_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'birth_certificate_error'));
+        document.getElementById('aadhaar_card').addEventListener('change', () => validateFileInput('aadhaar_card', ['pdf', 'jpeg', 'jpg'], 5, 'aadhaar_card_error'));
+        document.getElementById('father_mother_aadhaar_card').addEventListener('change', () => validateFileInput('father_mother_aadhaar_card', ['pdf', 'jpeg', 'jpg'], 5, 'father_mother_aadhaar_card_error'));
+        document.getElementById('income_certificate').addEventListener('change', () => validateFileInput('income_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'income_certificate_error'));
+        document.getElementById('ration_card').addEventListener('change', () => validateFileInput('ration_card', ['pdf', 'jpeg', 'jpg'], 5, 'ration_card_error'));
+        document.getElementById('passport_size_photo').addEventListener('change', () => validateFileInput('passport_size_photo', ['pdf', 'jpeg', 'jpg'], 5, 'passport_size_photo_error'));
+        document.getElementById('passbook').addEventListener('change', () => validateFileInput('passbook', ['pdf', 'jpeg', 'jpg'], 5, 'passbook_error'));
+        document.getElementById('transfer_certificate').addEventListener('change', () => validateFileInput('transfer_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'transfer_certificate_error'));
+        document.getElementById('previous_class_marks_card').addEventListener('change', () => validateFileInput('previous_class_marks_card', ['pdf', 'jpeg', 'jpg'], 5, 'previous_class_marks_card_error'));
+
+        // Optionally validate on form submission
+        document.getElementById('admissionForm').addEventListener('submit', (event) => {
+            const allValid = [
+                validateFileInput('birth_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'birth_certificate_error'),
+                validateFileInput('aadhaar_card', ['pdf', 'jpeg', 'jpg'], 5, 'aadhaar_card_error'),
+                validateFileInput('father_mother_aadhaar_card', ['pdf', 'jpeg', 'jpg'], 5, 'father_mother_aadhaar_card_error'),
+                validateFileInput('income_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'income_certificate_error'),
+                validateFileInput('ration_card', ['pdf', 'jpeg', 'jpg'], 5, 'ration_card_error'),
+                validateFileInput('passport_size_photo', ['pdf', 'jpeg', 'jpg'], 5, 'passport_size_photo_error'),
+                validateFileInput('passbook', ['pdf', 'jpeg', 'jpg'], 5, 'passbook_error'),
+                validateFileInput('transfer_certificate', ['pdf', 'jpeg', 'jpg'], 5, 'transfer_certificate_error'),
+                validateFileInput('previous_class_marks_card', ['pdf', 'jpeg', 'jpg'], 5, 'previous_class_marks_card_error')
+            ].every(valid => valid);
+
+            if (!allValid) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+</script>

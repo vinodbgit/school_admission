@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Structure</title>
+    <!--favicon -->
+    <link rel="icon" type="image/png" href="https://schools.org.in/assets/images/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- Modal -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <style>
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                min-width: 100%;
+                max-width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            color: white;
+            transition: color 0.3s ease, background 0.3s ease;
+            background: none;
+        }
+
+        .nav-link:hover {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .btn-outline-success,
+        .btn-outline-dark {
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline-success:hover,
+        .btn-outline-success:focus,
+        .btn-outline-success:active {
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1), rgba(40, 167, 69, 1));
+            /* Blue to Green */
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-outline-dark:hover,
+        .btn-outline-dark:focus,
+        .btn-outline-dark:active {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            /* Magenta to Blue */
+            color: white;
+            border-color: transparent;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        body {
+            background: linear-gradient(to right, #FAFDFF, #F0FAFF);
+        }
+    </style>
+    <script src="{{ url_for('static', filename='js/admissionFees.js') }}" defer></script>
+</head>
+
+<body>
+
+    <div class="d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar">
+            <div class="sidebar-header text-center py-4">
+                <img src="../static/images/profile.webp" alt="Profile Picture" class="img-fluid rounded-circle mb-2">
+                <p class="mb-0">{{ role }}</p>
+                <p class="mb-0">{{ email }}</p>
+            </div>
+            <hr class="bg-light">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"
+                        href="{{ url_for('admin_dashboard')}}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'student_dashboard' %}active{% endif %}"
+                        href="{{ url_for('student_dashboard')}}">Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'fees_structure' %}active{% endif %}"
+                        href="{{ url_for('fees_structure')}}">Fees Structure</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'contact_requests' %}active{% endif %}"
+                        href="{{ url_for('contact_requests')}}">Admission Request</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {%if request.endpoint == 'reports' %}active{% endif %}"
+                        href="{{ url_for('reports')}}">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'logout' %}active{% endif %}"
+                        href="{{url_for('logout')}}">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="content p-4">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://schools.org.in/assets/images/favicon.png" width="40px" height="40pxx"
+                            alt="School Logo" width="30" height="30">
+                    </a>
+                    <div class="d-flex ms-auto">
+                        <a href="{{url_for('admin_dashboard')}}"><button class="btn btn-outline-dark"
+                                style="background-color: azure;" type="button">Back</button></a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Flash Message -->
+            <div class="container mt-5">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <!-- Fees structure details -->
+            <center>
+                <div class="container mt-5">
+                    <div class="heading-block">
+                        <h1>School Fees Structure</h1>
+                    </div>
+                </div>
+            </center>
+            <hr>
+            <div class="container mt-5">
+                <!-- Admission Fees Table -->
+                <div class="table-container">
+                    <h2 class="text-center mb-4 shadow-sm p-3 bg-white rounded" style="font-weight: bold;">Admission
+                        Fees</h2>
+                    <button class="btn btn-outline-dark mb-3" onclick="showAdmissionForm()">+ New</button>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sl No</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">Admission Fees</th>
+                                <th scope="col">Tuition Fees</th>
+                                <th scope="col">Computer Fees</th>
+                                <th scope="col">Annual Day Fees</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fee in admission_fees %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ fee[1] }}</td>
+                                <td>{{ fee[2] }}</td>
+                                <td>{{ fee[3] }}</td>
+                                <td>{{ fee[4] }}</td>
+                                <td>{{ fee[5] }}</td>
+                                <td>{{ fee[6] }}</td>
+                                <td>
+                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#updateAdmissionFeesModal{{ fee[0] }}">Update</button>
+                                </td>
+                            </tr>
+
+                            <!-- Update Admission Fees Modal -->
+                            <div class="modal fade" id="updateAdmissionFeesModal{{ fee[0] }}" tabindex="-1"
+                                aria-labelledby="updateAdmissionFeesModalLabel{{ fee[0] }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateAdmissionFeesModalLabel{{ fee[0] }}">
+                                                Update Admission Fees</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('update_admission_fees') }}" method="post"
+                                                id="updateAdmissionfeesForm">
+                                                <input type="hidden" name="admission_fees_id" value="{{ fee[0] }}">
+                                                <div class="mb-3">
+                                                    <label for="class_name" class="form-label">Class</label>
+                                                    <input type="text" class="form-control" id="class_name2"
+                                                        name="class_name" value="{{ fee[1] }}" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="admission_fees" class="form-label">Admission
+                                                        Fees</label>
+                                                    <input type="number" class="form-control" id="admissionFees2"
+                                                        name="admission_fees" value="{{ fee[2] }}" required>
+                                                </div>
+                                                <div id="admission_fees_error2" class="text-danger"></div>
+                                                <div class="mb-3">
+                                                    <label for="tuition_fees" class="form-label">Tuition Fees</label>
+                                                    <input type="number" class="form-control" id="tuition_fees2"
+                                                        name="tuition_fees" value="{{ fee[3] }}" required>
+                                                </div>
+                                                <div id="tuition_fees_error2" class="text-danger"></div>
+                                                <div class="mb-3">
+                                                    <label for="computer_fees" class="form-label">Computer Fees</label>
+                                                    <input type="number" class="form-control" id="computer_fees2"
+                                                        name="computer_fees" value="{{ fee[4] }}" required>
+                                                </div>
+                                                <div id="computer_fees_error2" class="text-danger"></div>
+                                                <div class="mb-3">
+                                                    <label for="annual_day_fees" class="form-label">Annual Day
+                                                        Fees</label>
+                                                    <input type="number" class="form-control" id="annual_day_fees2"
+                                                        name="annual_day_fees" value="{{ fee[5] }}" required>
+                                                </div>
+                                                <div id="annual_day_fees_error2" class="text-danger"></div>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admission Fees Form Modal -->
+        <div id="admissionFeesForm" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Admission Fees Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('add_admission_fees') }}" id="admissionfeesForm">
+                            <div class="mb-3">
+                                <label for="className" class="form-label">Class</label>
+                                <input type="number" name="class_name" class="form-control" id="class_name1" required>
+                                <div id="class_name_error1" class="text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="admissionFees" class="form-label">Admission Fees</label>
+                                <input type="number" id="admissionFees1" name="admission_fees" class="form-control"
+                                    required>
+                                <div id="admission_fees_error1" class="text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tuitionfees" class="form-label">Tuition Fees</label>
+                                <input type="number" id="tuition_fees1" name="tuition_fees" class="form-control"
+                                    required>
+                                <div id="tuition_fees_error1" class="text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="computerfees" class="form-label">Computer Fees</label>
+                                <input type="number" id="computer_fees1" name="computer_fees" class="form-control"
+                                    required>
+                                <div id="computer_fees_error1" class="text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="annualdayfees" class="form-label">Annual Day Fees</label>
+                                <input type="number" id="annual_day_fees1" name="annual_day_fees" class="form-control"
+                                    required>
+                                <div id="annual_day_fees_error1" class="text-danger"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function showAdmissionForm() {
+            var modal = new bootstrap.Modal(document.getElementById('admissionFeesForm'));
+            modal.show();
+        }
+    </script>
+</body>
+
+</html>
+
+<script>
+    // validation for admission fees
+    document.getElementById('admissionfeesForm').addEventListener('submit', function (event) {
+        var valid = true;
+
+        var className = document.getElementById('class_name1').value;
+        var admissionFees = parseFloat(document.getElementById('admissionFees1').value);
+        var tuitionFees = parseFloat(document.getElementById('tuition_fees1').value);
+        var computerFees = parseFloat(document.getElementById('computer_fees1').value);
+        var annualDayFees = parseFloat(document.getElementById('annual_day_fees1').value);
+
+        if (!className) {
+            document.getElementById('class_name_error1').textContent = 'Class is required.';
+            valid = false;
+        } else {
+            document.getElementById('class_name_error1').textContent = '';
+        }
+
+        if (isNaN(admissionFees) || admissionFees < 0) {
+            document.getElementById('admission_fees_error1').textContent = 'Invalid Admission Fees.';
+            valid = false;
+        } else {
+            document.getElementById('admission_fees_error1').textContent = '';
+        }
+
+        if (isNaN(tuitionFees) || tuitionFees < 0) {
+            document.getElementById('tuition_fees_error1').textContent = 'Invalid Tuition Fees.';
+            valid = false;
+        } else {
+            document.getElementById('tuition_fees_error1').textContent = '';
+        }
+
+        if (isNaN(computerFees) || computerFees < 0) {
+            document.getElementById('computer_fees_error1').textContent = 'Invalid Computer Fees.';
+            valid = false;
+        } else {
+            document.getElementById('computer_fees_error1').textContent = '';
+        }
+
+        if (isNaN(annualDayFees) || annualDayFees < 0) {
+            document.getElementById('annual_day_fees_error1').textContent = 'Invalid Annual Day Fees.';
+            valid = false;
+        } else {
+            document.getElementById('annual_day_fees_error1').textContent = '';
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+    // validation For update admission fees 
+    document.getElementById('updateAdmissionfeesForm').addEventListener('submit', function (event) {
+        var valid = true;
+
+        var className1 = document.getElementById('class_name2').value;
+        var admissionFees1 = parseFloat(document.getElementById('admissionFees2').value);
+        var tuitionFees1 = parseFloat(document.getElementById('tuition_fees2').value);
+        var computerFees1 = parseFloat(document.getElementById('computer_fees2').value);
+        var annualDayFees1 = parseFloat(document.getElementById('annual_day_fees2').value);
+
+        if (!className1) {
+            document.getElementById('class_name_error2').textContent = 'Class is required.';
+            valid = false;
+        } else {
+            document.getElementById('class_name_error2').textContent = '';
+        }
+
+        if (isNaN(admissionFees1) || admissionFees1 < 0) {
+            document.getElementById('admission_fees_error2').textContent = 'Invalid Admission Fees.';
+            valid = false;
+        } else {
+            document.getElementById('admission_fees_error2').textContent = '';
+        }
+
+        if (isNaN(tuitionFees1) || tuitionFees1 < 0) {
+            document.getElementById('tuition_fees_error2').textContent = 'Invalid Tuition Fees.';
+            valid = false;
+        } else {
+            document.getElementById('tuition_fees_error2').textContent = '';
+        }
+
+        if (isNaN(computerFees1) || computerFees1 < 0) {
+            document.getElementById('computer_fees_error2').textContent = 'Invalid Computer Fees.';
+            valid = false;
+        } else {
+            document.getElementById('computer_fees_error2').textContent = '';
+        }
+
+        if (isNaN(annualDayFees1) || annualDayFees1 < 0) {
+            document.getElementById('annual_day_fees_error2').textContent = 'Invalid Annual Day Fees.';
+            valid = false;
+        } else {
+            document.getElementById('annual_day_fees_error2').textContent = '';
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>

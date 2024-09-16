@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> About </title>
+    <!--favicon -->
+    <link rel="icon" type="image/png" href="https://schools.org.in/assets/images/favicon.png">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <!-- CSS Link -->
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <style>
+        .font-weight-bold {
+            font-weight: bold;
+            font-size: 2em;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link.active {
+            border-bottom: 2px solid #ffffff;
+        }
+
+        body {
+            background: linear-gradient(to right, #FAFDFF, #F0FAFF);
+        }
+
+        /*about card */
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px;
+            overflow: hidden;
+            border-radius: 12%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+        }
+
+        .custom-card {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            margin: auto;
+        }
+
+        .custom-card img {
+            object-fit: cover;
+            height: 200px;
+        }
+
+        .custom-card .card-body {
+            padding: 15px;
+        }
+
+        .custom-card .card-title {
+            font-size: 1.2rem;
+        }
+
+        .custom-card .card-text {
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Header-->
+    <div class="header-logo">
+        <img src="https://schools.org.in/assets/images/favicon.png" alt="School Logo">
+        <h1 class="font-weight-bold" style="font-size: 45px;font-weight: bold;">Basava Education Foundation</h1>
+    </div>
+    <center>
+        <h4>Shri D. K. Kotrashetti English Medium Lower Primary School, Rabkavi-587311</h4>
+    </center>
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://schools.org.in/assets/images/favicon.png" width="40px" height="40pxx"
+                    alt="School Logo" width="30" height="30">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <li class="nav-item {% if request.endpoint == 'about' %}active{% endif %}">
+                        <a class="nav-link" href="{{ url_for('about')}}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('gallery')}}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact')}}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="btn btn-outline-light" href="{{ url_for('home') }}">Back</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br><br>
+
+    <div class="shadow p-2 bg-body-tertiary rounded">
+        <div class="card">
+            <div class="container">
+                <h2 class="card-title text-center" style="font-weight: bold; font-size: 50px;">History</h2>
+                <h5 class="card-text fw-light lh-base" style="text-align: justify;">
+                    <b>UNAIDED BASAVA EDUCATION FOUNDATION RABAKAVI was established in 2007 and it is managed by the
+                        Pvt. Unaided. It is located in Urban area. It is located in JAMAKHANDI block of BAGALKOT
+                        district of Karnataka. The school consists of Grades from 1 to 5. The school is Co-educational
+                        and it have an attached pre-primary section. The school is N/A in nature and is not using school
+                        building as a shift-school. Kannada is the medium of instructions in this school. This school is
+                        approachable by all weather road. In this school academic session starts in April. <br><br>
+                        The school has Private building. It has got 5 classrooms for instructional purposes. All the
+                        classrooms are in good condition. It has 2 other rooms for non-teaching activities. The school
+                        has a separate room for Head master/Teacher. The school has Barbed Wire Fencing boundary wall.
+                        The school has have electric connection. The source of Drinking Water in the school is None and
+                        it is functional. The school has 2 boys toilet and it is functional. and 2 girls toilet and it
+                        is functional. The school has a playground. <br><br>The school has a library and has 140 books
+                        in its library. The school does not need ramp for disabled children to access classrooms.The
+                        school has computers for teaching and learning purposes The school is not having a computer
+                        aided learning lab. The school is Not Provided providing mid-day meal.
+                    </b>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Chairman Section -->
+    <div class="container-fluid">
+        <h1 class="font-weight-bold text-center" style="font-size: 50px;">Chairman</h1>
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="https://app.teachaway.com/sites/default/files/collections/qualities-in-a-principal-teachers-like.jpg"
+                        class="img-fluid" alt="Chairman Image">
+                </div>
+                <div class="col-md-6">
+                    <h2>Mrs. Olivia Bennett</h2>
+                    <h6>BA, MEd English</h6>
+                    <h5 class="lh-base" style="text-align: justify;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Fusce
+                        dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit
+                        amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna.
+                    </h5>
+                    <h5 class="lh-base" style="text-align: justify;">
+                        Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor. Lorem
+                        ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in,
+                        egestas eget quam.
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <!-- Mission Section -->
+    <div class="container text-center">
+        <h4 class="font-weight-normal" style="font-size: 40px;">Mission</h4>
+        <h5 class="font-light" style="text-align: justify;">
+            Our mission is to provide a nurturing and inclusive learning environment that empowers every student to
+            reach their full potential. We are dedicated to fostering a culture of academic excellence, personal growth,
+            and social responsibility. Through a balanced and rigorous curriculum, innovative teaching practices, and a
+            commitment to diversity, we aim to equip our students with the knowledge, skills, and values needed to
+            thrive in an ever-changing world. We strive to inspire a lifelong love of learning, critical thinking, and
+            ethical leadership, preparing our students to become compassionate and engaged citizens who make meaningful
+            contributions to society.
+        </h5>
+    </div>
+    <br><br>
+
+    <!-- Vision Section -->
+    <div class="container text-center">
+        <h4 class="font-weight-normal" style="font-size: 40px;">Vision</h4>
+        <h5 class="font-weight-normal" style="text-align: justify;">
+            Our vision is to be a leading educational institution renowned for excellence in teaching, learning, and
+            community engagement. We envision a school where students are inspired to explore their passions, embrace
+            creativity, and achieve their highest aspirations. By fostering a supportive and collaborative environment,
+            we aim to cultivate resilient, innovative, and globally-minded individuals who are prepared to navigate and
+            positively impact an interconnected world. We aspire to set the standard for educational innovation,
+            inclusivity, and sustainability, creating a legacy of empowered learners who contribute to a brighter future
+            for all.
+        </h5>
+    </div>
+    <br><br>
+
+
+    <!-- Staff Members Section -->
+    <div>
+        <h2 class="font-weight-bold text-center" style="font-size: 40px;">Staff Members</h2>
+        <div class="row mt-4">
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card custom-card">
+                    <img src="../static/images/teacher1.jpeg" class="card-img-top" alt="Principal">
+                    <div class="card-body">
+                        <p class="card-text">Principal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card custom-card">
+                    <img src="../static/images/teacher2.jpeg" class="card-img-top" alt="Vice Principal">
+                    <div class="card-body">
+                        <p class="card-text">Vice Principal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card custom-card">
+                    <img src="../static/images/teacher3.jpeg" class="card-img-top" alt="Co-founder">
+                    <div class="card-body">
+                        <p class="card-text">Co-founder</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card custom-card">
+                    <img src="../static/images/teacher4.jpeg" class="card-img-top" alt="Managing Director">
+                    <div class="card-body">
+                        <p class="card-text">Managing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div> <br>
+
+
+
+        <hr>
+        <section class="bg-light py-4 py-md-5 py-xl-8 border-top border-light">
+            <div class="container overflow-hidden">
+                <div class="row gy-4 gy-lg-0 justify-content-xl-between">
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+                        <div class="widget text-center">
+                            <a href="#!">
+                                <img src="../static/images/home_page.jpg" alt="BootstrapBrain Logo" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+                        <div class="widget text-center">
+                            <h4 class="widget-title mb-4">Get in Touch</h4>
+                            <address class="mb-4">Rabkavi, Bagalkot, SH-53, Jamkhandi Miraj Road, Jamkhandi, Karnataka
+                                587311</address>
+                            <p class="mb-1">
+                                <a class="link-secondary text-decoration-none" href="tel:+918547964689">(+91)
+                                    9945882400</a>
+                            </p>
+                            <p class="mb-0">
+                                <a class="link-secondary text-decoration-none"
+                                    href="mailto:ourschool55@gmail.com">basavaeducationfoundation@gmail.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+                        <div class="widget text-center">
+                            <h4 class="widget-title mb-4">Useful Links</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="{{ url_for('home')}}" class="link-secondary text-decoration-none">Home</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ url_for('about')}}"
+                                        class="link-secondary text-decoration-none">About</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ url_for('gallery')}}"
+                                        class="link-secondary text-decoration-none">Gallery</a>
+                                </li>
+                                <li class="mb-0">
+                                    <a href="{{ url_for('contact')}}"
+                                        class="link-secondary text-decoration-none">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Meet Us on Google Map</h5>
+                            </div>
+                            <div class="ratio ratio-1x1">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d356933.8714888409!2d10.413661869378636!3d45.65994086120074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781eca8aec020b9%3A0x91dcf07c1c969bb8!2sGarda!5e0!3m2!1spl!2spl!4v1672244147501!5m2!1spl!2spl"
+                                    allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-secondary py-4 py-md-5 py-xl-8 border-top border-light-subtle">
+            <div class="container overflow-hidden">
+                <div class="row gy-4 gy-md-0 align-items-md-center">
+                    <div class="col-xs-12 col-md-7 order-1 order-md-0">
+                        <div class="copyright text-center text-md-start" , style="color: white;">
+                            &copy; 2024. All Rights Reserved.
+                        </div>
+                        <div style="color:white;">
+                            Built by Chum Tapak Dhum Dhum</a> with <span class="text-primary">&#9829;</span>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-5 order-0 order-md-1">
+                        <div class="social-media-wrapper">
+                            <ul class="list-unstyled m-0 p-0 d-flex justify-content-center justify-content-md-end">
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                                            <path
+                                                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.573 6.573 0 0 1-2.084.793A3.286 3.286 0 0 0 7.88 6.034a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.633 3.218 3.203 3.203 0 0 1-.865.114c-.21 0-.418-.021-.619-.058a3.283 3.283 0 0 0 3.067 2.277 6.588 6.588 0 0 1-4.862 1.358A9.286 9.286 0 0 0 5.026 15z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 0C5.824 0 5.555.01 4.703.048c-.852.04-1.43.176-1.943.377a3.92 3.92 0 0 0-1.415.915 3.92 3.92 0 0 0-.915 1.415c-.201.513-.337 1.09-.377 1.943C0 5.555 0 5.824 0 8s.01 2.445.048 3.297c.04.852.176 1.43.377 1.943.201.513.48.95.915 1.415.465.465.902.714 1.415.915.513.201 1.09.337 1.943.377C5.555 16 5.824 16 8 16s2.445-.01 3.297-.048c.852-.04 1.43-.176 1.943-.377a3.91 3.91 0 0 0 1.415-.915 3.91 3.91 0 0 0 .915-1.415c.201-.513.337-1.09.377-1.943C16 10.445 16 10.176 16 8s-.01-2.445-.048-3.297c-.04-.852-.176-1.43-.377-1.943a3.92 3.92 0 0 0-.915-1.415 3.92 3.92 0 0 0-1.415-.915c-.513-.201-1.09-.337-1.943-.377C10.445 0 10.176 0 8 0zm0 1.438c2.137 0 2.391.008 3.239.047.781.037 1.205.166 1.486.276.373.145.64.318.92.598.28.28.453.547.598.92.11.281.239.705.276 1.486.039.848.047 1.102.047 3.239s-.008 2.391-.047 3.239c-.037.781-.166 1.205-.276 1.486a2.482 2.482 0 0 1-.598.92 2.482 2.482 0 0 1-.92.598c-.281.11-.705.239-1.486.276-.848.039-1.102.047-3.239.047s-2.391-.008-3.239-.047c-.781-.037-1.205-.166-1.486-.276a2.494 2.494 0 0 1-.92-.598 2.494 2.494 0 0 1-.598-.92c-.11-.281-.239-.705-.276-1.486-.039-.848-.047-1.102-.047-3.239s.008-2.391.047-3.239c.037-.781.166-1.205.276-1.486a2.494 2.494 0 0 1 .598-.92 2.494 2.494 0 0 1 .92-.598c.281-.11.705-.239 1.486-.276.848-.039 1.102-.047 3.239-.047zm0 2.562a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 1.438a2.562 2.562 0 1 1 0 5.124 2.562 2.562 0 0 1 0-5.124zm5.078-.515a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                                            <path
+                                                d="M0 1.146C0 .513.324 0 .725 0h14.55c.401 0 .725.513.725 1.146v13.708c0 .633-.324 1.146-.725 1.146H.725A.723.723 0 0 1 0 14.854V1.146zm4.943 12.248V5.455H2.542v7.939h2.401zm-1.2-9.002a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zM13.997 8.08c0-2.201-1.175-3.22-2.742-3.22-1.274 0-1.844.701-2.165 1.194v.03h-.03a.647.647 0 0 1 .03-.03V5.455H7.095c.03.705 0 7.939 0 7.939h2.401V8.666c0-.238.017-.476.088-.646.193-.476.632-.97 1.37-.97.966 0 1.353.731 1.353 1.802v4.436h2.4V8.078h-.01z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="me-3">
+                                    <a href="#!" class="link-dark link-opacity-75-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                            <path
+                                                d="M13.601 2.326A7.932 7.932 0 0 0 8.131 0C3.684 0 .062 3.624.062 8.078c0 1.423.37 2.81 1.074 4.037L0 16l3.954-1.036a7.896 7.896 0 0 0 4.179 1.138h.005c4.447 0 8.069-3.625 8.069-8.078 0-2.156-.836-4.18-2.367-5.696zM8.13 14.624a6.528 6.528 0 0 1-3.355-.922l-.24-.143-2.351.617.629-2.292-.155-.245a6.538 6.538 0 0 1-.998-3.451c0-3.623 2.952-6.578 6.577-6.578 1.757 0 3.41.684 4.652 1.926 1.241 1.24 1.924 2.898 1.924 4.652 0 3.625-2.955 6.582-6.583 6.582zm3.472-4.788c-.3-.149-1.775-.87-2.05-.97-.274-.099-.474-.148-.674.149-.198.296-.773.97-.947 1.168-.174.198-.348.223-.648.075-.3-.149-1.262-.464-2.4-1.48-.887-.789-1.486-1.762-1.662-2.062-.174-.299-.019-.461.13-.61.134-.133.3-.348.449-.522.15-.174.2-.298.3-.497.1-.198.05-.372-.025-.521-.074-.149-.674-1.624-.924-2.225-.243-.584-.487-.504-.674-.513a1.372 1.372 0 0 0-.548.1c-.198.1-.522.198-.797.596-.273.396-1.047 1.022-1.047 2.494 0 1.473 1.071 2.898 1.22 3.096.148.198 2.11 3.224 5.108 4.515.715.308 1.273.493 1.71.64.719.228 1.373.197 1.89.12.577-.086 1.775-.725 2.025-1.427.248-.7.248-1.299.174-1.426-.075-.128-.272-.198-.572-.347z" />
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

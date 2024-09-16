@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Requests</title>
+    <!--favicon -->
+    <link rel="icon" type="image/png" href="https://schools.org.in/assets/images/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <style>
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                min-width: 100%;
+                max-width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            color: white;
+            transition: color 0.3s ease, background 0.3s ease;
+            background: none;
+        }
+
+        .nav-link:hover {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active {
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link.active::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130);
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            background: none;
+            color: black;
+            transition: background 0.5s ease;
+        }
+
+        .card:hover .card-body {
+            background: linear-gradient(90deg, rgba(255, 107, 107, 1), rgba(240, 225, 48, 1));
+        }
+
+        .card:active {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        body {
+            background: linear-gradient(to right, #FAFDFF, #F0FAFF);
+        }
+
+        .btn-outline-dark:hover,
+        .btn-outline-dark:focus,
+        .btn-outline-dark:active {
+            background: linear-gradient(90deg, rgba(255, 0, 128, 1), rgba(0, 0, 255, 1));
+            /* Magenta to Blue */
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar">
+            <div class="sidebar-header text-center py-4">
+                <img src="../static/images/profile.webp" alt="Profile Picture" class="img-fluid rounded-circle mb-2">
+                <p class="mb-0">{{ role }}</p>
+                <p class="mb-0">{{ email }}</p>
+            </div>
+            <hr class="bg-light">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"
+                        href="{{ url_for('admin_dashboard')}}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'student' %}active{% endif %}"
+                        href="{{ url_for('student_dashboard')}}">Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'fees_structure' %}active{% endif %}"
+                        href="{{ url_for('fees_structure')}}">Fees Structure</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'contact_requests' %}active{% endif %}"
+                        href="{{ url_for('contact_requests')}}">Admission Request</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {%if request.endpoint == 'reports'%}active{% endif %} "
+                        href="{{ url_for('reports')}}">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.endpoint == 'logout' %}active{% endif %}"
+                        href="{{url_for('logout')}}">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- Main content -->
+        <div class="content p-4">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://schools.org.in/assets/images/favicon.png" width="40px" height="40pxx"
+                            alt="School Logo" width="30" height="30">
+                    </a>
+                    <div class="d-flex ms-auto">
+                        <a href="{{url_for('admin_dashboard')}}"><button class="btn btn-outline-dark"
+                                style="background-color: azure;" type="button">Back</button></a>
+                    </div>
+                </div>
+            </nav>
+            <div class="container mt-5">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <!-- Admission Requests Details -->
+            <center>
+                <div class="container mt-5">
+                    <div class="heading-block">
+                        <h1>Admission Request</h1>
+                    </div>
+                </div>
+            </center>
+            <hr><br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Parent Name</th>
+                        <th>Email</th>
+                        <th>Request Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ request[1] }}</td>
+                        <td>{{ request[2] }}</td>
+                        <td>{{ request[8] }}</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#viewModal{{ request[0] }}">
+                                View
+                            </button>
+                            <button class="btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#replyModal-{{ request[0] }}" id="replyBtn-{{ request[0] }}" {% if
+                                request[9] %} disabled{% endif %}>{{ 'Replied' if request[9] else 'Reply' }}</button>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                data-target="#deleteModal{{ request[0] }}">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Modal for replying to contact requests -->
+            {% for request in requests %}
+            <div class="modal fade" id="replyModal-{{ request[0] }}" tabindex="-1" role="dialog"
+                aria-labelledby="replyModalLabel-{{ request[0] }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="replyModalLabel-{{ request[0] }}">Reply to Contact Request</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('reply_contact_request', request_id=request[0]) }}" method="POST"
+                                enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="replyFile-{{ request[0] }}">Upload File</label>
+                                    <input type="file" class="form-control" id="replyFile-{{ request[0] }}"
+                                        name="reply_file" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- View Details contact/admission requests -->
+            {% for request in requests %}
+            <div class="modal fade" id="viewModal{{ request[0] }}" tabindex="-1" role="dialog"
+                aria-labelledby="viewModalLabel{{ request[0] }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel{{ request[0] }}">Request Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Parent Name:</strong> {{ request[1] }}</p>
+                            <p><strong>Email:</strong> {{ request[2] }}</p>
+                            <p><strong>Phone Number:</strong> {{ request[3] }}</p>
+                            <p><strong>Child Name:</strong> {{ request[4] }}</p>
+                            <p><strong>Grade Level:</strong> {{ request[5] }}</p>
+                            <p><strong>Subject:</strong> {{ request[6] }}</p>
+                            <p><strong>Message:</strong> {{ request[7] }}</p>
+                            <p><strong>Request Time:</strong> {{ request[8] }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+            <!-- Delete Confirmation Modal -->
+            {% for request in requests %}
+            <div class="modal fade" id="deleteModal{{ request[0] }}" tabindex="-1" role="dialog"
+                aria-labelledby="deleteModalLabel{{ request[0] }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel{{ request[0] }}">Confirm Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this request?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            <form action="{{ url_for('delete_contact', contact_id=request[0]) }}" method="POST">
+                                <input type="hidden" name="contact_id" value="{{ request[0] }}">
+                                <button type="submit" class="btn btn-success">Yes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

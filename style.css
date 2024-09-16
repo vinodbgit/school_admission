@@ -1,0 +1,118 @@
+/* Font */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Trirong", serif;
+  }
+
+/* Logo */
+.header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Logo */
+.header-logo img {
+    width: 40px;
+    height: 45px;
+    margin-right: 10px;
+}
+
+/* Navbar */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    transition: background 0.3s, color 0.3s;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(45deg, #ff6b6b, #f8f41c);
+    border-radius: 5px;
+}
+.navbar-dark .navbar-nav .nav-link.active {
+    background: linear-gradient(45deg, #ff6b6b, #f8e71c);
+    border-radius: 5px;
+}
+/* Sticky Navbar */
+.navbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* .carousel-item {
+    height: 90vh;
+    min-height: 400px;
+}
+
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+
+/* Button */
+.btn-outline-light {
+    color: white;
+    border-color: white;
+    transition: background 0.3s, color 0.3s;
+}
+.btn-outline-light:hover {
+    color: black;
+    background: linear-gradient(45deg, #ff6b6b, #f8e71c);
+}
+
+/* Admin Login Page */
+.full-height {
+    height: 100vh;
+}
+.left-half {
+    background-image: url('../static/images/admin_login_page.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/*  for flash messages */
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+/* heading */
+.heading-block {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.heading-block h1 {
+    margin: 0;
+    font-weight: bold;
+}
