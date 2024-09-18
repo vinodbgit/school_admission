@@ -1,4 +1,4 @@
-[Student admission system.pdf](https://github.com/user-attachments/files/17046610/Student.admission.system.pdf)# school_admission
+# school_admission
 The School Admission System is designed to streamline and automate the 
 process of student enrollment in educational institutions. This system enables efficient 
 handling of applications, verification of student credentials, and management of 
